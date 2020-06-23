@@ -1,6 +1,13 @@
 <template>
   <div>
-    <input :type="type" class="input" :placeholder="placeholder" />
+    <input
+      :type="type"
+      class="input"
+      :class="{'is-invalid': invalid}"
+      v-model="payload"
+      :placeholder="placeholder"
+      @input="onHandleInput"
+    />
   </div>
 </template>
 
@@ -15,6 +22,26 @@ export default {
     type: {
       type: String,
       default: "text"
+    },
+    value: {
+      type: String,
+      default: ""
+    },
+    invalid: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data() {
+    return {
+      payload: this.value
+    };
+  },
+
+  methods: {
+    onHandleInput() {
+      this.$emit("input", this.payload);
     }
   }
 };
@@ -35,6 +62,11 @@ $font-size: 14px;
   padding: 9px 10px;
   font-size: 14px;
   transition: border 0.3s;
+
+  &.is-invalid,
+  &.input.is-invalid:focus {
+    border: 1px solid #dc3545;
+  }
 
   &:focus {
     outline: none;

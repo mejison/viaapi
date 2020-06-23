@@ -118,3 +118,48 @@ a {
 }
 
 /* paddings */
+
+/* public blank */
+.blank-wrapper {
+  position: relative;
+
+  .blank {
+    min-width: 480px;
+    min-height: 432px;
+
+    .blank-subheader,
+    .blank-header {
+      color: #444444;
+    }
+
+    .blank-header {
+      font-weight: bold;
+      font-size: 26px;
+    }
+
+    .blank-subheader {
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    .blank-form {
+      margin-top: 45px;
+    }
+  }
+
+  .blank-footer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .dot {
+      margin: 0 14px;
+      font-size: 12px;
+      color: #444444;
+    }
+  }
+}

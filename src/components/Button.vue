@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" :class="type">
+  <button class="btn" :class="type" @click="onHandleClick">
     <slot></slot>
   </button>
 </template>
@@ -11,6 +11,12 @@ export default {
   props: {
     type: {
       default: "primary"
+    }
+  },
+
+  methods: {
+    onHandleClick() {
+      this.$emit("click");
     }
   }
 };

@@ -1,7 +1,15 @@
 import Login from './Login'
-import Reset from './Reset'
+import ResetPassword from './Reset'
+import Forgot from './Forgot'
+import NotFoundPage from './NotFoundPage'
+import Questions from './Questions'
+import Tags from './Tags'
 
 export {
   Login,
-  Reset,
+  ResetPassword,
+  Forgot,
+  NotFoundPage,
+  Questions,
+  Tags,
 }

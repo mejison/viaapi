@@ -1,24 +1,19 @@
 <template>
   <div class="blank-wrapper">
     <card class="blank">
-      <back-btn label="Login" link="/" class="btn-back" />
+      <back-btn label="Login" class="btn-back" />
 
-      <h1 class="blank-header">Reset your Password</h1>
-      <h5 class="blank-subheader">Almost done, just enter your new Password below.</h5>
+      <h1 class="blank-header">Forgot Password</h1>
+      <h5 class="blank-subheader">Please enter your registered email</h5>
 
       <form class="blank-form">
         <div class="form-group">
-          <label>New Password</label>
-          <Input placeholder="New Password" />
-        </div>
-
-        <div class="form-group">
-          <label>Comfirm Password</label>
-          <Input placeholder="Comfirm Password" />
+          <label>Email</label>
+          <Input placeholder="Email" />
         </div>
 
         <div class="d-flex">
-          <btn class="ml-auto">Reset Password</btn>
+          <btn class="ml-auto">Send</btn>
         </div>
       </form>
     </card>
