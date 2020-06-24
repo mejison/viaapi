@@ -5,6 +5,8 @@ import BackBtn from './BackButton'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import Navigations from './Navigations'
+import Dropdown from './Dropdown'
+import QuestionsTable from './tables/Questions'
 
 export {
   Card,
@@ -14,4 +16,6 @@ export {
   Navbar,
   Sidebar,
   Navigations,
+  Dropdown,
+  QuestionsTable
 }

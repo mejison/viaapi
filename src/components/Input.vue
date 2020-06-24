@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="wrapper-input">
+    <i v-if="icon" class="fas icon" :class="{[icon]: true, [iconPosition]: true}"></i>
     <input
       :type="type"
       class="input"
-      :class="{'is-invalid': invalid}"
+      :class="{'is-invalid': invalid, 'indented': iconPosition == 'left'}"
       v-model="payload"
       :placeholder="placeholder"
       @input="onHandleInput"
@@ -16,6 +17,10 @@ export default {
   name: "input",
 
   props: {
+    icon: {
+      type: String,
+      default: ""
+    },
     placeholder: {
       type: String
     },
@@ -30,6 +35,10 @@ export default {
     invalid: {
       type: Boolean,
       default: false
+    },
+    iconPosition: {
+      type: String,
+      default: "left"
     }
   },
 
@@ -51,37 +60,60 @@ export default {
 $color-placeholder: #bdbdbd;
 $font-size: 14px;
 
-.input {
-  font-family: Nunito;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  box-sizing: border-box;
-  color: #bdbdbd;
-  border-radius: 3px;
-  width: 100%;
-  padding: 9px 10px;
-  font-size: 14px;
-  transition: border 0.3s;
+.wrapper-input {
+  position: relative;
 
-  &.is-invalid,
-  &.input.is-invalid:focus {
-    border: 1px solid #dc3545;
+  .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #bdbdbd;
+
+    &.left {
+      left: 10px;
+    }
+
+    &.right {
+      right: 10px;
+    }
   }
 
-  &:focus {
-    outline: none;
-    border: 1px solid #74b1c1;
+  .input {
+    font-family: Nunito;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    color: #bdbdbd;
+    border-radius: 3px;
+    width: 100%;
+    padding: 9px 10px;
+    font-size: 14px;
+    transition: border 0.3s;
+
+    &.indented {
+      padding-left: 32px;
+    }
+
+    &.is-invalid,
+    &.input.is-invalid:focus {
+      border: 1px solid #dc3545;
+    }
+
+    &:focus {
+      outline: none;
+      border: 1px solid #74b1c1;
+    }
   }
-}
-::placeholder {
-  color: $color-placeholder;
-}
+  ::placeholder {
+    color: $color-placeholder;
+  }
 
-:-ms-input-placeholder {
-  color: $color-placeholder;
-}
+  :-ms-input-placeholder {
+    color: $color-placeholder;
+  }
 
-::-ms-input-placeholder {
-  color: $color-placeholder;
+  ::-ms-input-placeholder {
+    color: $color-placeholder;
+  }
 }
 </style>

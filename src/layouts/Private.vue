@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="page">
     <div>
       <navbar />
       <sidebar />
     </div>
-    <div class="container">
+    <div class="dashboard">
       <router-view></router-view>
     </div>
   </div>
@@ -28,11 +28,3 @@ export default {
   methods: {}
 };
 </script>
-
-<style lang="scss" scoped>
-.container {
-  margin-left: 220px;
-  padding: 30px;
-  padding-top: 100px;
-}
-</style>
