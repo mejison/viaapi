@@ -39,7 +39,7 @@ export default {
     &.left {
       min-width: 500px;
       background: #74b1c1;
-      background-image: url("/assets/images/sidebar-bg.png");
+      background-image: url("/assets/images/sidebar-bg.webp");
     }
 
     &.right {

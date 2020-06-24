@@ -4,7 +4,12 @@ const auth = {
   namespaced: true,
   state: {
     me: {
-
+      name: "Bircan Tuner",
+      image: "/assets/images/avatar.png",
+      lang: {
+        name: "English",
+        flag: "/assets/images/english-flag.png",
+      }
     },
   },
   actions: {
@@ -13,9 +18,18 @@ const auth = {
         console.log(response)
         commit('setMe', {})
       })
+    },
+    changeLang({ commit }, lang) {
+      commit('setLang', lang);
     }
   },
   mutations: {
+    setLang(state, lang) {
+      state.me = {
+        ...state.me,
+        lang: lang
+      }
+    },
     setMe(state, data) {
       state.me = data
     }
