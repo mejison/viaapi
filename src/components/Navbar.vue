@@ -29,6 +29,7 @@ export default {
   background: #fff;
   border-bottom: 1px solid #e0e0e0;
   display: flex;
+  z-index: 2;
 
   .navbar-nav {
     width: 100%;

@@ -1,40 +1,69 @@
 <template>
   <div class="wrapper-table">
-    <div class="table-header"></div>
     <table class="table">
       <thead>
         <tr>
           <th>
-            <input type="checkbox" />
+            <checkbox @input="onSelectAll($event)" />
           </th>
-          <th v-for="(column, index) in columns" :key="index">{{ column.name }}</th>
+          <th v-for="(column, index) in columns" :key="index">
+            <div>
+              {{ column.name }}
+              <a href="#" @click="onClickSort(column)">
+                <i v-html="icons['arrows']"></i>
+              </a>
+            </div>
+          </th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, index) in data" :key="`row-${index}`">
           <td>
-            <input type="checkbox" />
+            <checkbox v-model="selected[index]" />
           </td>
-          <td v-for="(col, indexCol) in columns" :key="`col-${indexCol}`">{{ row[col.field] }}</td>
+          <td
+            v-for="(col, indexCol) in columns"
+            :class="{'center': col.center}"
+            :key="`col-${indexCol}`"
+          >{{ row[col.field] }}</td>
           <td>
-            <btn type="secondary small outline">edit</btn>
+            <btn type="secondary small outline edit-btn" @click="onClickEdit(row)">edit</btn>
+          </td>
+          <td>
+            <table-actions @delete="onClickDelete(row)" />
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="table-footer"></div>
+    <div class="table-footer">
+      <table-pagination
+        :current="pagination.page"
+        :total="pagination.total"
+        :per-page="pagination.per_page"
+        @change-page="onChangePage"
+        @change-per-page="onChangePerPage"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import Btn from "../Button";
+import icons from "@/icons";
+import TablePagination from "./Pagination";
+import TableActions from "./Actions";
+import Checkbox from "../CheckBox";
 
 export default {
   name: "question-table",
 
   components: {
-    Btn
+    Btn,
+    TablePagination,
+    TableActions,
+    Checkbox
   },
 
   props: {
@@ -49,7 +78,50 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      icons,
+      pagination: {
+        page: 1,
+        per_page: 10,
+        total: 50
+      },
+      selected: []
+    };
+  },
+
+  created() {
+    this.selected = this.data.map(() => {
+      return false;
+    });
+  },
+
+  methods: {
+    onSelectAll(toggle) {
+      this.selected = this.selected = this.data.map(() => {
+        return !toggle;
+      });
+    },
+    onClickEdit(question) {
+      this.$emit("select-question", question);
+    },
+    onClickSort(field) {
+      console.log(field);
+    },
+    onClickDelete(item) {
+      console.log("delete", item);
+    },
+    onChangePerPage(per_page) {
+      this.pagination = {
+        ...this.pagination,
+        per_page
+      };
+    },
+    onChangePage(page) {
+      this.pagination = {
+        ...this.pagination,
+        page
+      };
+    }
   }
 };
 </script>
@@ -69,7 +141,28 @@ export default {
         font-size: 14px;
         text-align: left;
         color: #bdbdbd;
-        padding: 15px 25px;
+        padding: 12px 25px 6px 25px;
+
+        white-space: nowrap;
+
+        div {
+          display: flex;
+          align-items: center;
+
+          a {
+            height: 28px;
+
+            i {
+              margin-left: 5px;
+              color: #e0e0e0;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+
+      tr {
+        vertical-align: middle;
       }
     }
 
@@ -77,7 +170,15 @@ export default {
       td {
         padding: 5px 25px;
         border-top: 1px solid #e0e0e0;
+
+        &.center {
+          text-align: center;
+        }
       }
+    }
+
+    .edit-btn {
+      padding: 5px 30px;
     }
   }
 }

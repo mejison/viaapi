@@ -4,7 +4,7 @@
     <input
       :type="type"
       class="input"
-      :class="{'is-invalid': invalid, 'indented': iconPosition == 'left'}"
+      :class="{'is-invalid': invalid, 'indented': iconPosition == 'left' && icon}"
       v-model="payload"
       :placeholder="placeholder"
       @input="onHandleInput"
@@ -51,6 +51,12 @@ export default {
   methods: {
     onHandleInput() {
       this.$emit("input", this.payload);
+    }
+  },
+
+  watch: {
+    vlaue() {
+      this.payload = this.value;
     }
   }
 };

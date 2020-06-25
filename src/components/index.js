@@ -7,6 +7,8 @@ import Sidebar from './Sidebar'
 import Navigations from './Navigations'
 import Dropdown from './Dropdown'
 import QuestionsTable from './tables/Questions'
+import CheckBox from './CheckBox'
+import QuestionEdit from './QuestionEdit'
 
 export {
   Card,
@@ -17,5 +19,7 @@ export {
   Sidebar,
   Navigations,
   Dropdown,
-  QuestionsTable
+  QuestionsTable,
+  CheckBox,
+  QuestionEdit,
 }

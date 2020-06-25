@@ -26,6 +26,10 @@ export default {
     invalid: {
       type: Boolean,
       default: false
+    },
+    options: {
+      type: Array,
+      default: () => {}
     }
   },
 
