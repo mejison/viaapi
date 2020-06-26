@@ -1,21 +1,24 @@
 <template>
   <div class="wrapper-answers-box">
-    <div class="answers-box">
-      <div class="answers-item" v-for="(answer, index) in answersSorted" :key="index">
-        <div class="drug">
-          <i v-html="icons['drug']"></i>
+    <div class="drap-and-drop" v-drag-and-drop:options="dragAndDropOptions" @change="onChangeOrder">
+      <div class="answers-box" @reordered="reordered">
+        <div
+          class="answers-item"
+          v-for="(answer, index) in answersSorted"
+          :key="index"
+          :data-id="index"
+        >
+          <div class="drug">
+            <i v-html="icons['drug']"></i>
+          </div>
+          <div>
+            <correct />
+          </div>
+          <input-field class="answer-input" v-model="answer.answer" placeholder="Answer" />
+          <a href="#" class="btn-delete" @click.stop.prevent="onClickRemove(answer, index)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
         </div>
-        <div>
-          <correct />
-        </div>
-        <input-field
-          class="answer-input"
-          v-model="answer.answer"
-          :placeholder="`Answer #${index + 1}`"
-        />
-        <a href="#" class="btn-delete" @click.prevent="onClickRemove(answer)">
-          <i class="fas fa-trash-alt"></i>
-        </a>
       </div>
     </div>
     <a href="#" class="add-btn" @click.prevent="onClickAddAnswer">
@@ -46,12 +49,64 @@ export default {
 
   data() {
     return {
-      answersSorted: this.answers,
-      icons
+      answersSorted: this.sortByOrder(this.answers),
+      icons,
+      dragAndDropOptions: {
+        dropzoneSelector: ".answers-box",
+        draggableSelector: ".answers-item",
+        handlerSelector: null,
+        reactivityEnabled: true,
+        multipleDropzonesItemsDraggingEnabled: true,
+        showDropzoneAreas: true
+      }
     };
   },
 
   methods: {
+    sortByOrder(answers) {
+      return answers.sort((curr, next) => {
+        return curr.sort > next.next ? -1 : 1;
+      });
+    },
+    onChangeOrder() {
+      console.log("change order");
+    },
+    reordered(event) {
+      const [elementId] = event.detail.ids;
+      const targetIndex = event.detail.index;
+      this.moveElementByIndex(elementId, targetIndex);
+    },
+    moveElementByIndex(elementId, targetIndex) {
+      let element = this.answersSorted[elementId];
+
+      let filtered = this.answersSorted.filter((item, index) => {
+        return index != elementId;
+      });
+
+      let newSorted = [],
+        item = {};
+
+      for (let index = 0; index < this.answersSorted.length; index++) {
+        item = filtered[index] ? filtered[index] : false;
+
+        if (index == targetIndex) {
+          if (item) {
+            newSorted = [...newSorted, element, item];
+          }
+
+          if (!item) {
+            newSorted = [...newSorted, element];
+          }
+          continue;
+        }
+
+        if (item) {
+          newSorted = [...newSorted, item];
+        }
+      }
+
+      this.answersSorted = [...newSorted];
+    },
     onClickAddAnswer() {
       this.answersSorted = [
         ...this.answersSorted,
@@ -61,8 +116,12 @@ export default {
         }
       ];
     },
-    onClickRemove(answer) {
-      console.log("remove", answer);
+    onClickRemove(answer, index) {
+      if (this.answersSorted.length > 1) {
+        this.answersSorted = this.answersSorted.filter((item, row) => {
+          return row != index;
+        });
+      }
     }
   },
 
@@ -74,6 +133,19 @@ export default {
 };
 </script>
 
+<style lang="scss">
+.wrapper-input .input {
+  color: #444444;
+}
+
+.item-dropzone-area {
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  background: #bdbdbd;
+}
+</style>
+
 <style lang="scss" scoped>
 .wrapper-answers-box {
   .answers-item {
@@ -81,6 +153,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &:active,
+    &:focus {
+      border: none;
+      outline: none;
+    }
 
     .answer-input {
       width: 100%;

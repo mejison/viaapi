@@ -1,43 +1,52 @@
 <template>
   <div class="wrapper-question-edit" :class="{'show': canShow}">
-    <div class="question-header">
-      <a href="#" class="close-btn" @click="$emit('close')">
-        <i class="fas fa-times"></i>
-      </a>
-      <div class="actions">
-        <div class="action">
-          <btn type="secondary small outline danger">Reject</btn>
+    <vue-custom-scrollbar class="scroll-area" :settings="settings">
+      <div>
+        <div class="question-header">
+          <a href="#" class="close-btn" @click="$emit('close')">
+            <i class="fas fa-times"></i>
+          </a>
+          <div class="actions">
+            <div class="action">
+              <btn type="secondary small outline danger">Reject</btn>
+            </div>
+            <div class="action">
+              <btn type="primary small">Approve</btn>
+            </div>
+          </div>
         </div>
-        <div class="action">
-          <btn type="primary small">Approve</btn>
+        <div class="question-body">
+          <h1 class="title">Question</h1>
+          <div class="form-group">
+            <text-field v-model="question.question" placeholder="Type name here ..." />
+          </div>
+          <answers-box :answers="question.answers" />
+          <div class="properties">
+            <div class="tags">
+              <h3>TAG</h3>
+              <tags :options="optionsTags" v-model="selectedTags">
+                <template v-slot:option="{ select }">
+                  <span>{{ select.name }}</span>
+                </template>
+              </tags>
+            </div>
+            <div class="difficulty">
+              <h3>DIFFICULTY</h3>
+              <range-slider :min="0" :max="12" :step="1" v-model="selectedDifficulty" />
+            </div>
+          </div>
+          <div class="buttons">
+            <btn type="primary outline" @click="$emit('close')">Close</btn>
+            <btn-dropdown
+              @click="onSelectDropdown"
+              type="primary"
+              v-model="currentOption"
+              :options="optionsDropdown"
+            ></btn-dropdown>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="question-body">
-      <h1 class="title">Question</h1>
-      <div class="form-group">
-        <text-field v-model="question.question" placeholder="Type name here ..." />
-      </div>
-      <answers-box :answers="question.answers" />
-      <div class="properties">
-        <div class="tags">
-          <h3>TAG</h3>
-        </div>
-        <div class="difficulty">
-          <h3>DIFFICULTY</h3>
-          <range-slider />
-        </div>
-      </div>
-      <div class="buttons">
-        <btn type="primary outline" @click="$emit('close')">Close</btn>
-        <btn-dropdown
-          @click="currentOption.callback"
-          type="primary"
-          v-model="currentOption"
-          :options="optionsDropdown"
-        ></btn-dropdown>
-      </div>
-    </div>
+    </vue-custom-scrollbar>
   </div>
 </template>
 
@@ -47,16 +56,20 @@ import TextField from "./Textarea";
 import AnswersBox from "./answers/Box";
 import BtnDropdown from "./BtnDropdown";
 import RangeSlider from "./RangeSlider";
+import Tags from "./Tags";
+import vueCustomScrollbar from "vue-custom-scrollbar";
 
 export default {
   name: "question-edit",
 
   components: {
+    vueCustomScrollbar,
     Btn,
     TextField,
     AnswersBox,
     BtnDropdown,
-    RangeSlider
+    RangeSlider,
+    Tags
   },
 
   props: {
@@ -68,6 +81,25 @@ export default {
 
   data() {
     return {
+      settings: {},
+      optionsTags: [
+        {
+          name: "Genel Kültür"
+        },
+        {
+          name: "Müzik"
+        },
+        {
+          name: "Coğrafya"
+        },
+        {
+          name: "Genel Kültür"
+        },
+        {
+          name: "Matematik"
+        }
+      ],
+      selectedTags: [],
       currentOption: {},
       optionsDropdown: [
         {
@@ -78,15 +110,22 @@ export default {
           name: "SAVE",
           callback: this.callbackSave
         }
-      ]
+      ],
+      selectedDifficulty: 5
     };
   },
 
   created() {
     document.addEventListener("click", this.clickOnBody);
+    this.selectedTags = [this.optionsTags[0], this.optionsTags[1]];
   },
 
   methods: {
+    onSelectDropdown() {
+      if (this.currentOption && this.currentOption.callback) {
+        this.currentOption.callback();
+      }
+    },
     callbackSave() {
       console.log("save");
     },
@@ -120,6 +159,12 @@ export default {
 <style lang="scss" scoped>
 $with-box: 563px;
 
+.scroll-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .wrapper-question-edit {
   position: fixed;
   z-index: 11;
@@ -129,6 +174,7 @@ $with-box: 563px;
   background: #ffffff;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
   min-width: $with-box;
+  max-width: $with-box;
   transition: right 0.3s;
   overflow: auto;
 
@@ -189,9 +235,11 @@ $with-box: 563px;
       }
 
       .tags {
+        margin-right: 10px;
       }
 
       .difficulty {
+        margin-left: 10px;
       }
 
       h3 {

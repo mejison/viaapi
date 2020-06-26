@@ -86,15 +86,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -107,15 +110,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -127,15 +133,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -147,15 +156,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -167,15 +179,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -187,15 +202,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -207,15 +225,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -227,15 +248,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         },
@@ -247,15 +271,18 @@ export default {
           answers: [
             {
               answer: "Ajda Pekkan",
-              correct: false
+              correct: false,
+              order: 1
             },
             {
               answer: "Sertap Erener",
-              correct: true
+              correct: true,
+              order: 2
             },
             {
               answer: "Grup Athena",
-              correct: false
+              correct: false,
+              order: 3
             }
           ]
         }

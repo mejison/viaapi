@@ -55,7 +55,7 @@ export default {
   },
 
   watch: {
-    vlaue() {
+    value() {
       this.payload = this.value;
     }
   }

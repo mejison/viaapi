@@ -9,6 +9,10 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 extend('required', required);
 
+import VueDraggable from 'vue-draggable'
+
+Vue.use(VueDraggable)
+
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
