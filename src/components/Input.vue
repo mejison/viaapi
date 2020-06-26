@@ -8,6 +8,8 @@
       v-model="payload"
       :placeholder="placeholder"
       @input="onHandleInput"
+      @focus="onHandleFocus"
+      @blur="onHandleBlur"
     />
   </div>
 </template>
@@ -51,6 +53,12 @@ export default {
   methods: {
     onHandleInput() {
       this.$emit("input", this.payload);
+    },
+    onHandleFocus() {
+      this.$emit("focus");
+    },
+    onHandleBlur() {
+      this.$emit("blur");
     }
   },
 

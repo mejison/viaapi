@@ -1,11 +1,11 @@
 <template>
   <div class="page">
     <div>
-      <navbar />
+      <navbar @new-question="onHandleNewQuestion" />
       <sidebar />
     </div>
     <div class="dashboard">
-      <router-view></router-view>
+      <router-view ref="page"></router-view>
     </div>
   </div>
 </template>
@@ -25,6 +25,13 @@ export default {
     return {};
   },
 
-  methods: {}
+  methods: {
+    onHandleNewQuestion() {
+      let page = this.$refs.page;
+      if (page.newQuestion) {
+        page.newQuestion();
+      }
+    }
+  }
 };
 </script>

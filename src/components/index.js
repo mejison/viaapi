@@ -9,6 +9,7 @@ import Dropdown from './Dropdown'
 import QuestionsTable from './tables/Questions'
 import CheckBox from './CheckBox'
 import QuestionEdit from './QuestionEdit'
+import SearchFilter from './filters/Search'
 
 export {
   Card,
@@ -22,4 +23,5 @@ export {
   QuestionsTable,
   CheckBox,
   QuestionEdit,
+  SearchFilter
 }

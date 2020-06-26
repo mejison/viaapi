@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper-question-edit" :class="{'show': canShow}">
+  <div class="wrapper-question-edit" :class="{'show': show}">
     <vue-custom-scrollbar class="scroll-area" :settings="settings">
       <div>
         <div class="question-header">
@@ -18,13 +18,13 @@
         <div class="question-body">
           <h1 class="title">Question</h1>
           <div class="form-group">
-            <text-field v-model="question.question" placeholder="Type name here ..." />
+            <text-field v-model="question.question" placeholder="Question" />
           </div>
           <answers-box :answers="question.answers" />
           <div class="properties">
             <div class="tags">
               <h3>TAG</h3>
-              <tags :options="optionsTags" v-model="selectedTags">
+              <tags :options="optionsTags" v-model="question.tags">
                 <template v-slot:option="{ select }">
                   <span>{{ select.name }}</span>
                 </template>
@@ -73,6 +73,10 @@ export default {
   },
 
   props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
     question: {
       type: Object,
       default: () => ({})
@@ -99,7 +103,6 @@ export default {
           name: "Matematik"
         }
       ],
-      selectedTags: [],
       currentOption: {},
       optionsDropdown: [
         {
@@ -137,7 +140,8 @@ export default {
 
       if (
         target.closest(".wrapper-question-edit") ||
-        target.classList.contains("edit-btn")
+        target.classList.contains("edit-btn") ||
+        target.closest(".new-question-btn")
       ) {
         return;
       }
@@ -145,12 +149,6 @@ export default {
     },
     reset() {
       this.$emit("close");
-    }
-  },
-
-  computed: {
-    canShow() {
-      return !!Object.keys(this.question).length;
     }
   }
 };

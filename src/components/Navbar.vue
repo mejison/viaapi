@@ -2,7 +2,7 @@
   <div class="navbar">
     <div class="navbar-nav">
       <div class="title">{{ $route.meta.title }}</div>
-      <btn>New Question</btn>
+      <btn class="new-question-btn" @click="$emit('new-question')">New Question</btn>
     </div>
   </div>
 </template>

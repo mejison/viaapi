@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-lg-7">
           <div class="form-group">
-            <Input placeholder="Search" icon="fa-search" />
+            <search-filter v-model="filter.query" />
           </div>
         </div>
       </div>
@@ -33,13 +33,19 @@
     </div>
     <div class="questions-table">
       <questions-table :columns="columns" :data="dataTable" @select-question="onSelectQuestion" />
-      <question-edit :question="current" @close="onCloseEdit" />
+      <question-edit :show="isShowQuestionSideBar" :question="current" @close="onCloseEdit" />
     </div>
   </div>
 </template>
 
 <script>
-import { Input, Dropdown, QuestionsTable, QuestionEdit } from "@/components";
+import {
+  Input,
+  Dropdown,
+  QuestionsTable,
+  QuestionEdit,
+  SearchFilter
+} from "@/components";
 
 export default {
   name: "questions-page",
@@ -48,11 +54,16 @@ export default {
     Input,
     Dropdown,
     QuestionsTable,
-    QuestionEdit
+    QuestionEdit,
+    SearchFilter
   },
 
   data() {
     return {
+      isShowQuestionSideBar: false,
+      filter: {
+        query: ""
+      },
       current: {},
       columns: [
         {
@@ -293,9 +304,27 @@ export default {
   methods: {
     onCloseEdit() {
       this.current = {};
+      this.setQuestionSidebar(false);
+    },
+    newQuestion() {
+      this.current = {
+        question: "",
+        answers: [
+          {
+            answer: ""
+          }
+        ],
+        tags: [],
+        difficulty: 5
+      };
+      this.setQuestionSidebar(true);
+    },
+    setQuestionSidebar(toggle) {
+      this.isShowQuestionSideBar = toggle;
     },
     onSelectQuestion(question) {
       this.current = question;
+      this.setQuestionSidebar(true);
     }
   },
 
