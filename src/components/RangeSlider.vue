@@ -1,52 +1,159 @@
 <template>
   <div class="wrapper-range-slider">
-    <slider :min="`${min}`" :max="`${max}`" v-model="payload"></slider>
+    <div class="slider">
+      <div class="slider__wrapper">
+        <div v-if="!hideLabel" :style="{ left: position }" class="slider__label">{{ sliderLabel }}</div>
+        <div class="slider__track" :class="{'slider__track--rectangular': !raising}">
+          <div
+            v-if="raising"
+            :style="{ 'border-left-width': sliderWidth + 'px' }"
+            class="slider__track-top"
+          />
+          <div
+            v-if="raising"
+            :style="{ 'border-right-width': sliderWidth + 'px' }"
+            class="slider__track-bottom"
+          />
+        </div>
+        <input
+          ref="slider"
+          v-model="sliderValue"
+          :max="sliderMax"
+          class="slider__input"
+          type="range"
+          :min="sliderMin"
+          :step="step"
+          @input="update"
+          @change="change"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Slider from "vue-custom-range-slider";
-
 export default {
-  name: "range-slider",
-
-  components: {
-    Slider
-  },
-
   props: {
     value: {
-      type: Number
+      type: [String, Number],
+      required: false,
+      default: ""
+    },
+    values: {
+      type: Array,
+      required: false,
+      default: () => []
     },
     min: {
-      type: Number,
-      defualt: 0
+      type: [String, Number],
+      required: false,
+      default: "0"
     },
     max: {
-      type: Number,
-      defualt: 100
+      type: [String, Number],
+      required: false,
+      default: "100"
     },
     step: {
-      type: Number,
-      defualt: 10
+      type: [String, Number],
+      required: false,
+      default: "1"
+    },
+    hideLabel: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    raising: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
 
   data() {
     return {
-      payload: `${this.value}`
+      sliderWidth: 0,
+      sliderValues: [],
+      sliderValue: this.value,
+      sliderMax: null,
+      sliderMin: null
     };
   },
 
-  methods: {
-    onChange() {
-      this.$emit("input", this.payload);
+  computed: {
+    sliderLabel() {
+      // If using custom values, the custom label is returned, otherwise the value is also the label
+      return this.sliderValues.length
+        ? this.sliderValues[this.sliderValue - 1].label
+        : this.sliderValue;
+    },
+    sliderOutputValue() {
+      // If using custom values, the custom value is returned, otherwise just the default value
+      return this.sliderValues.length
+        ? this.sliderValues[this.sliderValue - 1].value
+        : this.sliderValue;
+    },
+    position() {
+      const val = this.sliderValue;
+      // Measure width of slider element. Adjust by 20 to account for thumbsize
+      const width = this.sliderWidth - 20;
+
+      // Calculate percentage between left and right of input
+      const percent =
+        (val - this.sliderMin) / (this.sliderMax - this.sliderMin);
+
+      // Janky value to get pointer to line up better
+      const offset = -2;
+
+      const position = width * percent + offset;
+
+      return `${position}px`;
     }
   },
 
-  computed: {
-    left() {
-      return (this.payload / this.max) * 100;
+  created() {
+    // Set local values, depending on use of custom or default
+    if (this.values.length) {
+      this.sliderValues = this.values;
+      this.sliderMin = "1";
+      this.sliderMax = this.sliderValues.length;
+
+      // Find the corresponding custom value, and set the local sliderValue
+      let index = 0;
+      this.values.map((item, i) => {
+        if (item.value === this.value) {
+          index = i;
+        }
+        return true;
+      });
+      this.sliderValue = index + 1;
+    } else {
+      // In case of using default slider methods
+      this.sliderMin = this.min;
+      this.sliderMax = this.max;
+      this.sliderValue = this.value;
+    }
+  },
+
+  watch: {
+    value() {
+      this.sliderValue = this.value;
+    }
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.sliderWidth = this.$refs.slider.clientWidth;
+    });
+  },
+
+  methods: {
+    update() {
+      this.$emit("input", this.sliderOutputValue * 1);
+    },
+    change() {
+      this.$emit("change", this.sliderOutputValue);
     }
   }
 };

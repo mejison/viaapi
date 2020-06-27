@@ -43,6 +43,7 @@ export default {
   created() {
     if (this.options) {
       this.selected = this.options[0];
+      this.$emit("input", this.selected);
     }
 
     document.addEventListener("click", this.clickOnBody);

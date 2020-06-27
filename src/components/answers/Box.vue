@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-answers-box">
-    <div class="drap-and-drop" v-drag-and-drop:options="dragAndDropOptions" @change="onChangeOrder">
+    <div class="drap-and-drop" v-drag-and-drop:options="dragAndDropOptions">
       <div class="answers-box" @reordered="reordered">
         <div
           class="answers-item"
@@ -12,7 +12,7 @@
             <i v-html="icons['drug']"></i>
           </div>
           <div>
-            <correct />
+            <correct v-model="answer.correct" />
           </div>
           <input-field class="answer-input" v-model="answer.answer" placeholder="Answer" />
           <a href="#" class="btn-delete" @click.stop.prevent="onClickRemove(answer, index)">
@@ -41,7 +41,7 @@ export default {
   },
 
   props: {
-    answers: {
+    value: {
       type: Array,
       default: () => []
     }
@@ -49,7 +49,7 @@ export default {
 
   data() {
     return {
-      answersSorted: this.sortByOrder(this.answers),
+      answersSorted: this.value,
       icons,
       dragAndDropOptions: {
         dropzoneSelector: ".answers-box",
@@ -63,14 +63,6 @@ export default {
   },
 
   methods: {
-    sortByOrder(answers) {
-      return answers.sort((curr, next) => {
-        return curr.sort > next.next ? -1 : 1;
-      });
-    },
-    onChangeOrder() {
-      console.log("change order");
-    },
     reordered(event) {
       const [elementId] = event.detail.ids;
       const targetIndex = event.detail.index;
@@ -115,6 +107,7 @@ export default {
           correct: false
         }
       ];
+      this.$emit("input", this.answersSorted);
     },
     onClickRemove(answer, index) {
       if (this.answersSorted.length > 1) {
@@ -126,8 +119,8 @@ export default {
   },
 
   watch: {
-    answers() {
-      this.answersSorted = this.answers;
+    value() {
+      this.answersSorted = this.value;
     }
   }
 };

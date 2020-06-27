@@ -20,7 +20,7 @@
           <div class="form-group">
             <text-field v-model="question.question" placeholder="Question" />
           </div>
-          <answers-box :answers="question.answers" />
+          <answers-box v-model="question.answers" />
           <div class="properties">
             <div class="tags">
               <h3>TAG</h3>
@@ -32,7 +32,7 @@
             </div>
             <div class="difficulty">
               <h3>DIFFICULTY</h3>
-              <range-slider :min="0" :max="12" :step="1" v-model="selectedDifficulty" />
+              <range-slider :min="0" :max="12" :step="1" v-model="question.difficulty" />
             </div>
           </div>
           <div class="buttons">
@@ -83,26 +83,12 @@ export default {
     }
   },
 
+  destroyed() {},
+
   data() {
     return {
       settings: {},
-      optionsTags: [
-        {
-          name: "Genel Kültür"
-        },
-        {
-          name: "Müzik"
-        },
-        {
-          name: "Coğrafya"
-        },
-        {
-          name: "Genel Kültür"
-        },
-        {
-          name: "Matematik"
-        }
-      ],
+      optionsTags: [],
       currentOption: {},
       optionsDropdown: [
         {
@@ -130,10 +116,10 @@ export default {
       }
     },
     callbackSave() {
-      console.log("save");
+      this.$emit("save", this.question);
     },
     callbackSaveWithCreate() {
-      console.log("save with create");
+      this.$emit("save-with-create", this.question);
     },
     clickOnBody(event) {
       let target = event.target;

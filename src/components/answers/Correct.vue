@@ -30,7 +30,7 @@ export default {
 
   methods: {
     onChange() {
-      this.$emit("input", !this.payload);
+      this.$emit("input", this.payload);
     }
   }
 };

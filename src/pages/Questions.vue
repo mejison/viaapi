@@ -33,7 +33,13 @@
     </div>
     <div class="questions-table">
       <questions-table :columns="columns" :data="dataTable" @select-question="onSelectQuestion" />
-      <question-edit :show="isShowQuestionSideBar" :question="current" @close="onCloseEdit" />
+      <question-edit
+        :show="isShowQuestionSideBar"
+        :question="current"
+        @close="onCloseEdit"
+        @save="onHandleSave"
+        @save-with-create="onHandleSaveWithCreate"
+      />
     </div>
   </div>
 </template>
@@ -110,6 +116,14 @@ export default {
               correct: false,
               order: 3
             }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
           ]
         },
         {
@@ -134,6 +148,14 @@ export default {
               correct: false,
               order: 3
             }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
           ]
         },
         {
@@ -156,6 +178,14 @@ export default {
               answer: "Grup Athena",
               correct: false,
               order: 3
+            }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
             }
           ]
         },
@@ -180,6 +210,14 @@ export default {
               correct: false,
               order: 3
             }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
           ]
         },
         {
@@ -202,6 +240,14 @@ export default {
               answer: "Grup Athena",
               correct: false,
               order: 3
+            }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
             }
           ]
         },
@@ -226,6 +272,14 @@ export default {
               correct: false,
               order: 3
             }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
           ]
         },
         {
@@ -248,6 +302,14 @@ export default {
               answer: "Grup Athena",
               correct: false,
               order: 3
+            }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
             }
           ]
         },
@@ -272,6 +334,14 @@ export default {
               correct: false,
               order: 3
             }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
           ]
         },
         {
@@ -295,6 +365,14 @@ export default {
               correct: false,
               order: 3
             }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
           ]
         }
       ]
@@ -302,6 +380,13 @@ export default {
   },
 
   methods: {
+    onHandleSave(question) {
+      console.log("onHandleSave", question);
+    },
+    onHandleSaveWithCreate(question) {
+      console.log("onHandleSaveWithCreate", question);
+    },
+    save() {},
     onCloseEdit() {
       this.current = {};
       this.setQuestionSidebar(false);
@@ -311,7 +396,8 @@ export default {
         question: "",
         answers: [
           {
-            answer: ""
+            answer: "",
+            correct: false
           }
         ],
         tags: [],
