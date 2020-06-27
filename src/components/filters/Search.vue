@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-search-filter" :class="{'active': canActive}">
-    <Input placeholder="Search" icon="fa-search" v-model="payload" @input="onInput" />
+    <input-field placeholder="Search" icon="fa-search" v-model="payload" @input="onInput" />
     <a href="#" @click.stop="onClose" class="close-btn" v-show="canActive">
       <i class="fas fa-times"></i>
     </a>
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import Input from "../Input";
+import InputField from "../InputField";
 
 export default {
   name: "search",
 
   components: {
-    Input
+    InputField
   },
 
   props: {

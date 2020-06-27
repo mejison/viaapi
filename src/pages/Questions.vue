@@ -16,12 +16,12 @@
         </div>
         <div class="col-lg-3">
           <div class="form-group">
-            <Input placeholder="Date" icon="fa-calendar-alt" icon-position="right" />
+            <input-field placeholder="Date" icon="fa-calendar-alt" icon-position="right" />
           </div>
         </div>
         <div class="col-lg-2">
           <div class="form-group">
-            <Input placeholder="Tags" icon="fa-tags" icon-position="right" />
+            <input-field placeholder="Tags" icon="fa-tags" icon-position="right" />
           </div>
         </div>
         <div class="col-lg-2">
@@ -35,10 +35,10 @@
       <questions-table :columns="columns" :data="dataTable" @select-question="onSelectQuestion" />
       <question-edit
         :show="isShowQuestionSideBar"
-        :question="current"
+        :question="{...current}"
         @close="onCloseEdit"
         @save="onHandleSave"
-        @save-with-create="onHandleSaveWithCreate"
+        @save-with-create="onHandleSaveWithCreateNew"
       />
     </div>
   </div>
@@ -46,7 +46,7 @@
 
 <script>
 import {
-  Input,
+  InputField,
   Dropdown,
   QuestionsTable,
   QuestionEdit,
@@ -57,7 +57,7 @@ export default {
   name: "questions-page",
 
   components: {
-    Input,
+    InputField,
     Dropdown,
     QuestionsTable,
     QuestionEdit,
@@ -381,12 +381,33 @@ export default {
 
   methods: {
     onHandleSave(question) {
-      console.log("onHandleSave", question);
+      this.save(question);
     },
-    onHandleSaveWithCreate(question) {
-      console.log("onHandleSaveWithCreate", question);
+    onHandleSaveWithCreateNew(question) {
+      this.save(question);
+      this.newQuestion(question);
     },
-    save() {},
+    save(question) {
+      if (question.id) {
+        this.update(question);
+        return;
+      }
+
+      const lastItem = this.items[this.items.length - 1];
+      question.id = lastItem.id + 1;
+      this.create(question);
+    },
+    create(question) {
+      this.items = [...this.items, question];
+    },
+    update(question) {
+      this.items = this.items.map(item => {
+        if (question.id == item.id) {
+          return question;
+        }
+        return item;
+      });
+    },
     onCloseEdit() {
       this.current = {};
       this.setQuestionSidebar(false);
@@ -394,6 +415,7 @@ export default {
     newQuestion() {
       this.current = {
         question: "",
+        date: this.nowDate,
         answers: [
           {
             answer: "",
@@ -417,6 +439,14 @@ export default {
   computed: {
     dataTable() {
       return this.items;
+    },
+    nowDate() {
+      let now = new Date();
+      let month = now.getMonth() + 1;
+      if (month < 9) {
+        month = `0${month}`;
+      }
+      return `${now.getDate()}.${month}.${now.getFullYear()}`;
     }
   }
 };

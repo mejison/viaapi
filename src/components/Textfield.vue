@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "textarea",
+  name: "textfield",
 
   props: {
     value: {

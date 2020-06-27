@@ -1,6 +1,6 @@
 import Card from './Card'
 import Btn from './Button'
-import Input from './Input'
+import InputField from './InputField'
 import BackBtn from './BackButton'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
@@ -14,7 +14,7 @@ import SearchFilter from './filters/Search'
 export {
   Card,
   Btn,
-  Input,
+  InputField,
   BackBtn,
   Navbar,
   Sidebar,

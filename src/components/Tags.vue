@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import InputField from "./Input";
+import InputField from "./InputField";
 import CheckBox from "./CheckBox";
 
 export default {

@@ -9,7 +9,7 @@
       <form class="blank-form">
         <div class="form-group">
           <label>Email</label>
-          <Input placeholder="Email" />
+          <input-field placeholder="Email" />
         </div>
 
         <div class="d-flex">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Card, Btn, Input, BackBtn } from "@/components";
+import { Card, Btn, InputField, BackBtn } from "@/components";
 
 export default {
   name: "Forgot",
@@ -29,7 +29,7 @@ export default {
   components: {
     Card,
     Btn,
-    Input,
+    InputField,
     BackBtn
   },
 

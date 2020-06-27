@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import InputField from "../Input";
+import InputField from "../InputField";
 import Correct from "./Correct";
 import icons from "@/icons";
 

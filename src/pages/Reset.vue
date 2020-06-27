@@ -9,12 +9,12 @@
       <form class="blank-form">
         <div class="form-group">
           <label>New Password</label>
-          <Input placeholder="New Password" />
+          <input-field placeholder="New Password" />
         </div>
 
         <div class="form-group">
           <label>Comfirm Password</label>
-          <Input placeholder="Comfirm Password" />
+          <input-field placeholder="Comfirm Password" />
         </div>
 
         <div class="d-flex">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { Card, Btn, Input, BackBtn } from "@/components";
+import { Card, Btn, InputField, BackBtn } from "@/components";
 
 export default {
   name: "Forgot",
@@ -34,7 +34,7 @@ export default {
   components: {
     Card,
     Btn,
-    Input,
+    InputField,
     BackBtn
   },
 

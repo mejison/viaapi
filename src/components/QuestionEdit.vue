@@ -52,7 +52,7 @@
 
 <script>
 import Btn from "./Button";
-import TextField from "./Textarea";
+import TextField from "./Textfield";
 import AnswersBox from "./answers/Box";
 import BtnDropdown from "./BtnDropdown";
 import RangeSlider from "./RangeSlider";
@@ -113,6 +113,7 @@ export default {
     onSelectDropdown() {
       if (this.currentOption && this.currentOption.callback) {
         this.currentOption.callback();
+        this.$emit("close");
       }
     },
     callbackSave() {

@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "input",
+  name: "input-field",
 
   props: {
     icon: {

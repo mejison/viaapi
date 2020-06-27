@@ -9,7 +9,11 @@
           <div class="form-group">
             <label>Username</label>
             <validation-provider name="Username" rules="required" v-slot="{ errors }">
-              <Input placeholder="Username" v-model="signin.username" :invalid="!!errors.length" />
+              <input-field
+                placeholder="Username"
+                v-model="signin.username"
+                :invalid="!!errors.length"
+              />
             </validation-provider>
           </div>
 
@@ -19,7 +23,11 @@
               <router-link to="/forgot-password" class="primary">Forgot Password?</router-link>
             </div>
             <validation-provider name="Password" rules="required" v-slot="{ errors }">
-              <Input placeholder="Password" v-model="signin.password" :invalid="!!errors.length" />
+              <input-field
+                placeholder="Password"
+                v-model="signin.password"
+                :invalid="!!errors.length"
+              />
             </validation-provider>
           </div>
 
@@ -38,7 +46,7 @@
 </template>
 
 <script>
-import { Card, Btn, Input } from "@/components";
+import { Card, Btn, InputField } from "@/components";
 import { mapActions } from "vuex";
 
 export default {
@@ -47,7 +55,7 @@ export default {
   components: {
     Card,
     Btn,
-    Input
+    InputField
   },
 
   data() {
