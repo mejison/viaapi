@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in data" :key="`row-${index}`">
+        <tr v-for="(row, index) in dataMaped" :key="`row-${index}`">
           <td>
             <checkbox v-model="selected[index]" />
           </td>
@@ -83,16 +83,32 @@ export default {
       pagination: {
         page: 1,
         per_page: 10,
-        total: 50
+        total: this.data.length
       },
       selected: []
     };
+  },
+
+  watch: {
+    data() {
+      this.pagination.total = this.data.length;
+    }
   },
 
   created() {
     this.selected = this.data.map(() => {
       return false;
     });
+  },
+
+  computed: {
+    dataMaped() {
+      const startSlice = Math.ceil(
+        this.pagination.per_page * (this.pagination.page - 1)
+      );
+
+      return this.data.slice(startSlice, startSlice + this.pagination.per_page);
+    }
   },
 
   methods: {

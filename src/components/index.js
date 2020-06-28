@@ -10,6 +10,7 @@ import QuestionsTable from './tables/Questions'
 import CheckBox from './CheckBox'
 import QuestionEdit from './QuestionEdit'
 import SearchFilter from './filters/Search'
+import DropdownFilter from './filters/Dropdown'
 
 export {
   Card,
@@ -18,6 +19,7 @@ export {
   BackBtn,
   Navbar,
   Sidebar,
+  DropdownFilter,
   Navigations,
   Dropdown,
   QuestionsTable,

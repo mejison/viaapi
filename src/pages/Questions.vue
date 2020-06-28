@@ -11,7 +11,11 @@
       <div class="row">
         <div class="col-lg-2">
           <div class="form-group">
-            <dropdown placeholder="Difficulty" />
+            <dropdown-filter
+              placeholder="Difficulty"
+              v-model="filter.difficulty"
+              :options="difficultyOptions"
+            />
           </div>
         </div>
         <div class="col-lg-3">
@@ -26,7 +30,7 @@
         </div>
         <div class="col-lg-2">
           <div class="form-group">
-            <dropdown placeholder="Status" />
+            <dropdown-filter placeholder="Status" v-model="filter.status" :options="statusOptions" />
           </div>
         </div>
       </div>
@@ -47,10 +51,10 @@
 <script>
 import {
   InputField,
-  Dropdown,
   QuestionsTable,
   QuestionEdit,
-  SearchFilter
+  SearchFilter,
+  DropdownFilter
 } from "@/components";
 
 export default {
@@ -58,17 +62,19 @@ export default {
 
   components: {
     InputField,
-    Dropdown,
     QuestionsTable,
     QuestionEdit,
-    SearchFilter
+    SearchFilter,
+    DropdownFilter
   },
 
   data() {
     return {
       isShowQuestionSideBar: false,
       filter: {
-        query: ""
+        query: "",
+        difficulty: [],
+        status: []
       },
       current: {},
       columns: [
@@ -374,6 +380,174 @@ export default {
               name: "Genel Kültür"
             }
           ]
+        },
+        {
+          id: 67,
+          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          date: "25.05.2020",
+          difficulty: 1,
+          answers: [
+            {
+              answer: "Ajda Pekkan",
+              correct: false,
+              order: 1
+            },
+            {
+              answer: "Sertap Erener",
+              correct: true,
+              order: 2
+            },
+            {
+              answer: "Grup Athena",
+              correct: false,
+              order: 3
+            }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
+          ]
+        },
+        {
+          id: 67,
+          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          date: "25.05.2020",
+          difficulty: 1,
+          answers: [
+            {
+              answer: "Ajda Pekkan",
+              correct: false,
+              order: 1
+            },
+            {
+              answer: "Sertap Erener",
+              correct: true,
+              order: 2
+            },
+            {
+              answer: "Grup Athena",
+              correct: false,
+              order: 3
+            }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
+          ]
+        },
+        {
+          id: 67,
+          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          date: "25.05.2020",
+          difficulty: 1,
+          answers: [
+            {
+              answer: "Ajda Pekkan",
+              correct: false,
+              order: 1
+            },
+            {
+              answer: "Sertap Erener",
+              correct: true,
+              order: 2
+            },
+            {
+              answer: "Grup Athena",
+              correct: false,
+              order: 3
+            }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
+          ]
+        },
+        {
+          id: 67,
+          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          date: "25.05.2020",
+          difficulty: 1,
+          answers: [
+            {
+              answer: "Ajda Pekkan",
+              correct: false,
+              order: 1
+            },
+            {
+              answer: "Sertap Erener",
+              correct: true,
+              order: 2
+            },
+            {
+              answer: "Grup Athena",
+              correct: false,
+              order: 3
+            }
+          ],
+          tags: [
+            {
+              name: "Müzik"
+            },
+            {
+              name: "Genel Kültür"
+            }
+          ]
+        }
+      ],
+      difficultyOptions: [
+        {
+          label: "1",
+          value: 1
+        },
+        {
+          label: "2",
+          value: 2
+        },
+        {
+          label: "3",
+          value: 3
+        },
+        {
+          label: "4",
+          value: 4
+        },
+        {
+          label: "5",
+          value: 5
+        }
+      ],
+      statusOptions: [
+        {
+          label: "Active",
+          value: "active"
+        },
+        {
+          label: "Inactive",
+          value: "inactive"
+        },
+        {
+          label: "Waiting Approval",
+          value: "waiting-approval"
+        },
+        {
+          label: "Deleted",
+          value: "deleted"
+        },
+        {
+          label: "All",
+          value: "all"
         }
       ]
     };
@@ -398,7 +572,7 @@ export default {
       this.create(question);
     },
     create(question) {
-      this.items = [...this.items, question];
+      this.items = [question, ...this.items];
     },
     update(question) {
       this.items = this.items.map(item => {
@@ -438,7 +612,12 @@ export default {
 
   computed: {
     dataTable() {
-      return this.items;
+      return this.items.filter(item => {
+        if (this.filter.query) {
+          return item.question.indexOf(this.filter.query) + 1;
+        }
+        return true;
+      });
     },
     nowDate() {
       let now = new Date();

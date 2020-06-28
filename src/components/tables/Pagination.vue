@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-pagination">
-    <div class="pagination">
+    <div class="pagination" v-if="total >= perPage">
       <a href="#" class="prev" @click.prevent="onClickPrev">
         <i class="fas fa-chevron-left"></i>
       </a>
@@ -54,8 +54,8 @@ export default {
   },
 
   methods: {
-    onChangePerPage(page) {
-      this.$emit("change-per-page", page);
+    onChangePerPage(e) {
+      this.$emit("change-per-page", e.target.value * 1);
     },
     onChange(page) {
       this.page = page;
@@ -93,7 +93,7 @@ export default {
     display: flex;
     padding: 10px;
     align-items: center;
-    margin-right: 75px;
+    margin-right: 45px;
 
     .next,
     .prev {
@@ -129,6 +129,10 @@ export default {
 
   .rows-per-page {
     color: #bdbdbd;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    margin-left: 15px;
 
     .per-page-select {
       margin-left: 31px;
