@@ -20,7 +20,7 @@
         </div>
         <div class="col-lg-3">
           <div class="form-group">
-            <input-field placeholder="Date" icon="fa-calendar-alt" icon-position="right" />
+            <date-filter placeholder="Date" v-model="filter.date" />
           </div>
         </div>
         <div class="col-lg-2">
@@ -55,19 +55,23 @@
 
 <script>
 import {
-  InputField,
+  // InputField,
   QuestionsTable,
   QuestionEdit,
   SearchFilter,
   DropdownFilter,
-  TagsFilter
+  TagsFilter,
+  DateFilter
 } from "@/components";
+
+import moment from "moment";
 
 export default {
   name: "questions-page",
 
   components: {
-    InputField,
+    // InputField,
+    DateFilter,
     QuestionsTable,
     QuestionEdit,
     SearchFilter,
@@ -78,11 +82,16 @@ export default {
   data() {
     return {
       isShowQuestionSideBar: false,
+      moment,
       filter: {
         query: "",
         difficulty: [],
         status: [],
-        tags: []
+        tags: [],
+        date: {
+          startDate: "",
+          endDate: ""
+        }
       },
       current: {},
       columns: [
@@ -663,6 +672,7 @@ export default {
           difficulty = true,
           status = true,
           tags = true,
+          date = true,
           deleted = true;
 
         if (this.filter.query) {
@@ -690,11 +700,21 @@ export default {
           });
         }
 
+        if (this.filter.date.startDate && this.filter.date.endDate) {
+          let { startDate, endDate } = this.filter.date,
+            current = moment(item.date, "DD.MM.Y");
+
+          startDate = moment(startDate);
+          endDate = moment(endDate);
+
+          date = startDate.diff(current) < 0 && endDate.diff(current) > 0;
+        }
+
         if (this.deleted.length) {
           deleted = !this.deleted.find(row => row.id == item.id);
         }
 
-        return search && difficulty && status && tags && deleted;
+        return search && difficulty && status && tags && date && deleted;
       });
     },
     nowDate() {

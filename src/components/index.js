@@ -12,6 +12,7 @@ import QuestionEdit from './QuestionEdit'
 import SearchFilter from './filters/Search'
 import DropdownFilter from './filters/Dropdown'
 import TagsFilter from './filters/Tags'
+import DateFilter from './filters/Date'
 
 export {
   Card,
@@ -27,5 +28,6 @@ export {
   CheckBox,
   QuestionEdit,
   SearchFilter,
-  TagsFilter
+  TagsFilter,
+  DateFilter,
 }
