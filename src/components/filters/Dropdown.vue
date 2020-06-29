@@ -1,14 +1,22 @@
 <template>
   <div class="wrapper-dropdown-filter">
-    <div class="input-dropdown" @click.stop.prevent="onToggle">
-      <span>{{ placeholder }}</span>
+    <div class="input-dropdown" @click.stop.prevent="onToggle" :class="{'active': active}">
+      <span>
+        {{ placeholder }}
+        <span v-if="active">&bull;{{ active }}</span>
+      </span>
       <a href="#" class="dropdown-icon">
         <i class="fas fa-chevron-down"></i>
       </a>
     </div>
     <div class="dropdown-list" v-if="toggle">
-      <div class="item-dropdown" v-for="(option, index) in options" :key="index">
-        <checkbox />
+      <div
+        class="item-dropdown"
+        v-for="(option, index) in options"
+        :key="index"
+        @click.stop.prevent="onToggleCheck(index)"
+      >
+        <checkbox :value="payload[index]" />
         <span class="label-dropdown">{{ option.label }}</span>
       </div>
       <div class="item-dropdown" @click.stop.prevent="onClickFilter">
@@ -54,16 +62,23 @@ export default {
 
   created() {
     document.addEventListener("click", this.clickOnBody);
+    this.payload = this.options.map(() => false);
   },
 
   watch: {
     value() {
-      this.payload = this.value;
+      this.payload = this.options.map(item => {
+        let find = this.value.find(row => row.value == item.value);
+        return find ? true : false;
+      });
     }
   },
 
   methods: {
-    isChecked() {},
+    onToggleCheck(index) {
+      this.payload[index] = !this.payload[index];
+      this.payload = [...this.payload];
+    },
     clickOnBody(event) {
       let target = event.target;
       if (target.closest(".wrapper-dropdown-filter")) {
@@ -73,10 +88,21 @@ export default {
     },
     onClickFilter() {
       this.toggle = false;
-      this.$emit("input", this.payload);
+
+      const selected = this.options.filter((item, index) => {
+        return this.payload[index];
+      });
+
+      this.$emit("input", selected);
     },
     onToggle() {
       this.toggle = !this.toggle;
+    }
+  },
+
+  computed: {
+    active() {
+      return this.payload.filter(item => item).length;
     }
   }
 };
@@ -101,6 +127,10 @@ export default {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+
+    &.active {
+      color: #444;
+    }
 
     .dropdown-icon {
       color: #bdbdbd;

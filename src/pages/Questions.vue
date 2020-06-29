@@ -25,7 +25,7 @@
         </div>
         <div class="col-lg-2">
           <div class="form-group">
-            <input-field placeholder="Tags" icon="fa-tags" icon-position="right" />
+            <tags-filter placeholder="Tags" v-model="filter.tags" :options="tagsOptions" />
           </div>
         </div>
         <div class="col-lg-2">
@@ -36,7 +36,12 @@
       </div>
     </div>
     <div class="questions-table">
-      <questions-table :columns="columns" :data="dataTable" @select-question="onSelectQuestion" />
+      <questions-table
+        :columns="columns"
+        :data="dataTable"
+        @select-question="onSelectQuestion"
+        @delete="onDeleteRow"
+      />
       <question-edit
         :show="isShowQuestionSideBar"
         :question="{...current}"
@@ -54,7 +59,8 @@ import {
   QuestionsTable,
   QuestionEdit,
   SearchFilter,
-  DropdownFilter
+  DropdownFilter,
+  TagsFilter
 } from "@/components";
 
 export default {
@@ -65,7 +71,8 @@ export default {
     QuestionsTable,
     QuestionEdit,
     SearchFilter,
-    DropdownFilter
+    DropdownFilter,
+    TagsFilter
   },
 
   data() {
@@ -74,7 +81,8 @@ export default {
       filter: {
         query: "",
         difficulty: [],
-        status: []
+        status: [],
+        tags: []
       },
       current: {},
       columns: [
@@ -106,6 +114,7 @@ export default {
             "2003 yılında Euro Vizyon Şarkı yarışmasında ülkemizi temsil eden ve yarışmada birinci gelen sanatçımız kimdir?",
           date: "25.05.2020",
           difficulty: 1,
+          status: "active",
           answers: [
             {
               answer: "Ajda Pekkan",
@@ -138,6 +147,7 @@ export default {
             "Tsunami felaketinde en fazla zarar gören Güney Asya ülkesi aşağıdakilerden hangisidir?",
           date: "25.05.2020",
           difficulty: 2,
+          status: "active",
           answers: [
             {
               answer: "Ajda Pekkan",
@@ -169,6 +179,7 @@ export default {
           question: "Üç büyük dince kutsal sayılan şehir hangisidir?",
           date: "25.05.2020",
           difficulty: 4,
+          status: "active",
           answers: [
             {
               answer: "Ajda Pekkan",
@@ -200,6 +211,7 @@ export default {
           question: "Aspirinin hammadesi nedir?",
           date: "25.05.2020",
           difficulty: 4,
+          status: "active",
           answers: [
             {
               answer: "Ajda Pekkan",
@@ -230,6 +242,7 @@ export default {
           id: 34,
           question: "Aşağıdaki ülkelerden hangisinin nüfusu daha fazladır?",
           date: "25.05.2020",
+          status: "active",
           difficulty: 2,
           answers: [
             {
@@ -292,6 +305,7 @@ export default {
           id: 46,
           question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
           date: "25.05.2020",
+          status: "inactive",
           difficulty: 2,
           answers: [
             {
@@ -382,7 +396,7 @@ export default {
           ]
         },
         {
-          id: 67,
+          id: 68,
           question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
           date: "25.05.2020",
           difficulty: 1,
@@ -413,7 +427,7 @@ export default {
           ]
         },
         {
-          id: 67,
+          id: 69,
           question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
           date: "25.05.2020",
           difficulty: 1,
@@ -444,10 +458,11 @@ export default {
           ]
         },
         {
-          id: 67,
+          id: 70,
           question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
           date: "25.05.2020",
           difficulty: 1,
+          status: "inactive",
           answers: [
             {
               answer: "Ajda Pekkan",
@@ -475,10 +490,11 @@ export default {
           ]
         },
         {
-          id: 67,
+          id: 71,
           question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
           date: "25.05.2020",
           difficulty: 1,
+          status: "waiting-approval",
           answers: [
             {
               answer: "Ajda Pekkan",
@@ -549,11 +565,41 @@ export default {
           label: "All",
           value: "all"
         }
-      ]
+      ],
+      tagsOptions: [
+        {
+          label: "Matematik",
+          value: "Matematik"
+        },
+        {
+          label: "Genel Kültür",
+          value: "Genel Kültür"
+        },
+        {
+          label: "Müzik",
+          value: "Müzik"
+        },
+        {
+          label: "Tarih",
+          value: "Tarih"
+        },
+        {
+          label: "Sinema",
+          value: "Sinema"
+        },
+        {
+          label: "Edebiyat",
+          value: "Edebiyat"
+        }
+      ],
+      deleted: []
     };
   },
 
   methods: {
+    onDeleteRow(item) {
+      this.deleted = [...this.deleted, item];
+    },
     onHandleSave(question) {
       this.save(question);
     },
@@ -613,10 +659,42 @@ export default {
   computed: {
     dataTable() {
       return this.items.filter(item => {
+        let search = true,
+          difficulty = true,
+          status = true,
+          tags = true,
+          deleted = true;
+
         if (this.filter.query) {
-          return item.question.indexOf(this.filter.query) + 1;
+          search =
+            item.question
+              .toLowerCase()
+              .indexOf(this.filter.query.toLowerCase()) + 1;
         }
-        return true;
+
+        if (this.filter.difficulty.length) {
+          difficulty = this.filter.difficulty.some(row => {
+            return row.value == item.difficulty;
+          });
+        }
+
+        if (this.filter.status.length) {
+          status = this.filter.status.some(row => {
+            return row.value == item.status;
+          });
+        }
+
+        if (this.filter.tags.length) {
+          tags = this.filter.tags.every(row => {
+            return item.tags.find(tag => tag.name == row.value);
+          });
+        }
+
+        if (this.deleted.length) {
+          deleted = !this.deleted.find(row => row.id == item.id);
+        }
+
+        return search && difficulty && status && tags && deleted;
       });
     },
     nowDate() {

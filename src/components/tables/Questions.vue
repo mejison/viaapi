@@ -35,6 +35,9 @@
             <table-actions @delete="onClickDelete(row)" />
           </td>
         </tr>
+        <tr v-if=" ! dataMaped.length">
+          <td colspan="7" class="empty-message text-center">Not found.</td>
+        </tr>
       </tbody>
     </table>
     <div class="table-footer">
@@ -124,7 +127,7 @@ export default {
       console.log(field);
     },
     onClickDelete(item) {
-      console.log("delete", item);
+      this.$emit("delete", item);
     },
     onChangePerPage(per_page) {
       this.pagination = {
@@ -190,6 +193,11 @@ export default {
         &.center {
           text-align: center;
         }
+      }
+
+      .empty-message {
+        color: #bdbdbd;
+        padding: 10px 25px;
       }
     }
 

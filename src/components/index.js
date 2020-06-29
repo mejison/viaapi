@@ -11,6 +11,7 @@ import CheckBox from './CheckBox'
 import QuestionEdit from './QuestionEdit'
 import SearchFilter from './filters/Search'
 import DropdownFilter from './filters/Dropdown'
+import TagsFilter from './filters/Tags'
 
 export {
   Card,
@@ -25,5 +26,6 @@ export {
   QuestionsTable,
   CheckBox,
   QuestionEdit,
-  SearchFilter
+  SearchFilter,
+  TagsFilter
 }
