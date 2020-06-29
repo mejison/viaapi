@@ -2,16 +2,19 @@
   <div class="navbar">
     <div class="navbar-nav">
       <div class="title">{{ $route.meta.title }}</div>
-      <btn class="new-question-btn" @click="$emit('new-question')">New Question</btn>
+      <btn class="new-question-btn" @click="$emit('new-question')">{{ __('New Question') }}</btn>
     </div>
   </div>
 </template>
 
 <script>
 import { Btn } from "@/components";
+import langs from "@/mixins/langs";
 
 export default {
   name: "navbar",
+
+  mixins: [langs],
 
   components: {
     Btn

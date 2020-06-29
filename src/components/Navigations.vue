@@ -31,7 +31,7 @@
             :key="indexChildren"
           >
             <span class="dot">&bull;</span>
-            {{ navChildren.title }}
+            <router-link :to="navChildren.url">{{ navChildren.title }}</router-link>
           </div>
         </div>
       </div>
@@ -40,44 +40,58 @@
 </template>
 
 <script>
+import langs from "@/mixins/langs";
+
 export default {
   name: "navigations",
 
+  mixins: [langs],
+
   data() {
     return {
-      navs: [
-        {
-          title: "Trivia Questions",
-          url: "/app",
-          name: "questions",
-          icon: "fa-language",
-          childrens: [
-            {
-              title: "Turkish",
-              url: "turkish"
-            },
-            {
-              title: "English",
-              url: "english"
-            }
-          ]
-        },
-        {
-          title: "Tags",
-          url: "/app/tags",
-          icon: "fa-tags",
-          name: "tags"
-        }
-      ],
+      navs: [],
       toggles: []
     };
   },
 
   created() {
     this.reset();
+    this.setNavs();
+  },
+
+  watch: {
+    lang() {
+      this.setNavs();
+    }
   },
 
   methods: {
+    setNavs() {
+      this.navs = [
+        {
+          title: `Trivia ${this.__("Questions")}`,
+          url: "/app",
+          name: "questions",
+          icon: "fa-language",
+          childrens: [
+            {
+              title: "Turkish",
+              url: "/app/turkish"
+            },
+            {
+              title: "English",
+              url: "/app"
+            }
+          ]
+        },
+        {
+          title: this.__("Tags"),
+          url: "/app/tags",
+          icon: "fa-tags",
+          name: "tags"
+        }
+      ];
+    },
     onHandleToggle(index) {
       this.toggles = this.toggles.map((item, indexRow) =>
         indexRow == index ? !item : item

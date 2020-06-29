@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import { Login, Forgot, NotFoundPage, ResetPassword, Questions, Tags } from '@/pages'
+import { Login, Forgot, NotFoundPage, ResetPassword, QuestionsEnglish, QuestionsTurkish, Tags } from '@/pages'
 import { Public, Private } from '@/layouts'
 
 Vue.use(VueRouter)
@@ -37,9 +37,19 @@ const routes = [
       {
         path: '',
         name: 'questions',
-        component: Questions,
+        component: QuestionsEnglish,
+        meta: {
+          title: 'TRIVIA QUESTIONS - ENGLISH',
+          lang: 'en'
+        }
+      },
+      {
+        path: 'turkish',
+        name: 'questions',
+        component: QuestionsTurkish,
         meta: {
           title: 'TRIVIA QUESTIONS - TURKISH',
+          lang: 'tk'
         }
       },
       {

@@ -8,22 +8,22 @@
           </a>
           <div class="actions">
             <div class="action">
-              <btn type="secondary small outline danger">Reject</btn>
+              <btn type="secondary small outline danger">{{ __('Reject') }}</btn>
             </div>
             <div class="action">
-              <btn type="primary small">Approve</btn>
+              <btn type="primary small">{{ __('Approve') }}</btn>
             </div>
           </div>
         </div>
         <div class="question-body">
-          <h1 class="title">Question</h1>
+          <h1 class="title">{{ __('Question') }}</h1>
           <div class="form-group">
-            <text-field v-model="question.question" placeholder="Question" />
+            <text-field v-model="question.question" :placeholder="__('Question')" />
           </div>
           <answers-box v-model="question.answers" />
           <div class="properties">
             <div class="tags">
-              <h3>TAG</h3>
+              <h3>{{ __('TAG') }}</h3>
               <tags :options="optionsTags" v-model="question.tags">
                 <template v-slot:option="{ select }">
                   <span>{{ select.name }}</span>
@@ -31,12 +31,12 @@
               </tags>
             </div>
             <div class="difficulty">
-              <h3>DIFFICULTY</h3>
+              <h3>{{ __('Difficulty') }}</h3>
               <range-slider :min="0" :max="12" :step="1" v-model="question.difficulty" />
             </div>
           </div>
           <div class="buttons">
-            <btn type="primary outline" @click="$emit('close')">Close</btn>
+            <btn type="primary outline" @click="$emit('close')">{{ __('Close') }}</btn>
             <btn-dropdown
               @click="onSelectDropdown"
               type="primary"
@@ -58,6 +58,7 @@ import BtnDropdown from "./BtnDropdown";
 import RangeSlider from "./RangeSlider";
 import Tags from "./Tags";
 import vueCustomScrollbar from "vue-custom-scrollbar";
+import langs from "@/mixins/langs";
 
 export default {
   name: "question-edit",
@@ -71,6 +72,8 @@ export default {
     RangeSlider,
     Tags
   },
+
+  mixins: [langs],
 
   props: {
     show: {
@@ -90,16 +93,7 @@ export default {
       settings: {},
       optionsTags: [],
       currentOption: {},
-      optionsDropdown: [
-        {
-          name: "SAVE &amp; ADD NEW QUESTION",
-          callback: this.callbackSaveWithCreate
-        },
-        {
-          name: "SAVE",
-          callback: this.callbackSave
-        }
-      ],
+      optionsDropdown: [],
       selectedDifficulty: 5
     };
   },
@@ -107,9 +101,28 @@ export default {
   created() {
     document.addEventListener("click", this.clickOnBody);
     this.selectedTags = [this.optionsTags[0], this.optionsTags[1]];
+    this.setDropDownOptions();
+  },
+
+  watch: {
+    lang() {
+      this.setDropDownOptions();
+    }
   },
 
   methods: {
+    setDropDownOptions() {
+      this.optionsDropdown = [
+        {
+          name: this.__("SAVE &amp; ADD NEW QUESTION"),
+          callback: this.callbackSaveWithCreate
+        },
+        {
+          name: this.__("SAVE"),
+          callback: this.callbackSave
+        }
+      ];
+    },
     onSelectDropdown() {
       if (this.currentOption && this.currentOption.callback) {
         this.currentOption.callback();

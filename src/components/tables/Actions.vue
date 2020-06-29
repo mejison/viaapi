@@ -6,7 +6,7 @@
     <div class="actions" :class="{'show': toggle}">
       <div class="action" @click="onClickDelete">
         <i class="fas fa-trash-alt"></i>
-        Delete
+        {{ __('Delete') }}
       </div>
     </div>
   </div>
@@ -14,6 +14,7 @@
 
 <script>
 import icons from "@/icons";
+import langs from "@/mixins/langs";
 
 export default {
   name: "table-actions",
@@ -24,6 +25,8 @@ export default {
       toggle: false
     };
   },
+
+  mixins: [langs],
 
   created() {
     this.reset();

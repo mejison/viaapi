@@ -34,6 +34,13 @@ export default {
     DateRangePicker
   },
 
+  props: {
+    placeholder: {
+      type: String,
+      default: "Date"
+    }
+  },
+
   data() {
     return {
       dateRange: {
@@ -58,7 +65,7 @@ export default {
         ? `${moment(picker.startDate).format("DD.MM.Y")} - ${moment(
             picker.endDate
           ).format("DD.MM.Y")}`
-        : "Date";
+        : this.placeholder;
     }
   },
 
@@ -70,8 +77,104 @@ export default {
 .daterangepicker {
   background: #fff;
   width: 542px;
+  font-family: Nunito;
+  top: 40px;
+
+  .month {
+    color: #444;
+    font-size: 14px !important;
+    font-family: Nunito;
+  }
+
+  tbody {
+    th {
+      font-family: Nunito;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 10px;
+      text-align: center;
+      color: #444444;
+    }
+
+    td:not(.off) {
+      font-family: Nunito;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      text-align: center;
+      color: #444444;
+    }
+  }
+
   .row {
     margin: 0;
+    text-align: center;
+  }
+
+  td.in-range {
+    background: #f2f2f2;
+  }
+
+  td.active:hover {
+    background: transparent;
+    color: #444;
+  }
+
+  td.start-date,
+  td.end-date {
+    &:before {
+      content: "";
+      top: 50%;
+      left: 50%;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      background: #e0e0e0;
+      display: block;
+      height: 28px;
+      width: 28px;
+      border-radius: 50%;
+    }
+  }
+
+  td.start-date {
+    &:after {
+      content: "";
+      top: 50%;
+      left: 30px;
+      z-index: -2;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      background: #f2f2f2;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  td.end-date {
+    &:after {
+      content: "";
+      top: 50%;
+      left: 5px;
+      z-index: -2;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      background: #f2f2f2;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  td.start-date,
+  td.end-date {
+    color: #74b1c1 !important;
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: bold !important;
+    font-size: 12px;
     text-align: center;
   }
 }

@@ -2,7 +2,8 @@ import Login from './Login'
 import ResetPassword from './Reset'
 import Forgot from './Forgot'
 import NotFoundPage from './NotFoundPage'
-import Questions from './Questions'
+import QuestionsEnglish from './QuestionsEnglish'
+import QuestionsTurkish from './QuestionsTurkish'
 import Tags from './Tags'
 
 export {
@@ -10,6 +11,7 @@ export {
   ResetPassword,
   Forgot,
   NotFoundPage,
-  Questions,
+  QuestionsEnglish,
+  QuestionsTurkish,
   Tags,
 }

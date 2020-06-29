@@ -29,7 +29,7 @@
             :key="`col-${indexCol}`"
           >{{ row[col.field] }}</td>
           <td>
-            <btn type="secondary small outline edit-btn" @click="onClickEdit(row)">edit</btn>
+            <btn type="secondary small outline edit-btn" @click="onClickEdit(row)">{{ __('edit') }}</btn>
           </td>
           <td>
             <table-actions @delete="onClickDelete(row)" />
@@ -59,6 +59,8 @@ import TablePagination from "./Pagination";
 import TableActions from "./Actions";
 import Checkbox from "../CheckBox";
 
+import langs from "@/mixins/langs";
+
 export default {
   name: "question-table",
 
@@ -79,6 +81,8 @@ export default {
       default: () => []
     }
   },
+
+  mixins: [langs],
 
   data() {
     return {
@@ -157,10 +161,11 @@ export default {
         font-family: Nunito;
         font-style: normal;
         font-weight: normal;
+        text-transform: uppercase;
         font-size: 14px;
         text-align: left;
         color: #bdbdbd;
-        padding: 12px 25px 6px 25px;
+        padding: 12px 25px;
 
         white-space: nowrap;
 

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-pagination">
-    <div class="pagination" v-if="total >= perPage">
+    <div class="pagination" v-if="total > perPage">
       <a href="#" class="prev" @click.prevent="onClickPrev">
         <i class="fas fa-chevron-left"></i>
       </a>
@@ -16,7 +16,7 @@
       </a>
     </div>
     <div class="rows-per-page">
-      <span>Rows Per Page:</span>
+      <span>{{ __('Rows Per Page') }}:</span>
       <select class="per-page-select" @change="onChangePerPage">
         <option
           :checked="perPage == perPageIndex"
@@ -29,8 +29,12 @@
 </template>
 
 <script>
+import langs from "@/mixins/langs";
+
 export default {
   name: "table-pagination",
+
+  mixins: [langs],
 
   props: {
     current: {

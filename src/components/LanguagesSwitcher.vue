@@ -48,11 +48,13 @@ export default {
       self: this,
       englishLang: {
         name: "English",
-        flag: "/assets/images/english-flag.png"
+        flag: "/assets/images/english-flag.png",
+        iso: "en"
       },
       turkishLang: {
         name: "Turkish",
-        flag: "/assets/images/turkish-flag.png"
+        flag: "/assets/images/turkish-flag.png",
+        iso: "tk"
       },
       settings: [
         {
@@ -83,7 +85,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("auth", ["changeLang"]),
+    ...mapActions("app", ["changeLang"]),
     onHandleToggle(index) {
       this.toggles = this.toggles.map((item, indexRow) =>
         indexRow == index ? !item : item
@@ -100,12 +102,12 @@ export default {
 
   computed: {
     currentLng() {
-      return this.me && this.me.lang && this.me.lang.name;
+      return this.lang && this.lang.name;
     },
     currentFlag() {
-      return this.me && this.me.lang && this.me.lang.flag;
+      return this.lang && this.lang.flag;
     },
-    ...mapState("auth", ["me"])
+    ...mapState("app", ["lang"])
   }
 };
 </script>

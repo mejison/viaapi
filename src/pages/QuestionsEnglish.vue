@@ -12,7 +12,7 @@
         <div class="col-lg-2">
           <div class="form-group">
             <dropdown-filter
-              placeholder="Difficulty"
+              :placeholder="__('Difficulty')"
               v-model="filter.difficulty"
               :options="difficultyOptions"
             />
@@ -20,17 +20,21 @@
         </div>
         <div class="col-lg-3">
           <div class="form-group">
-            <date-filter placeholder="Date" v-model="filter.date" />
+            <date-filter :placeholder="__('Date')" v-model="filter.date" />
           </div>
         </div>
         <div class="col-lg-2">
           <div class="form-group">
-            <tags-filter placeholder="Tags" v-model="filter.tags" :options="tagsOptions" />
+            <tags-filter :placeholder="__('Tags')" v-model="filter.tags" :options="tagsOptions" />
           </div>
         </div>
         <div class="col-lg-2">
           <div class="form-group">
-            <dropdown-filter placeholder="Status" v-model="filter.status" :options="statusOptions" />
+            <dropdown-filter
+              :placeholder="__('Status')"
+              v-model="filter.status"
+              :options="statusOptions"
+            />
           </div>
         </div>
       </div>
@@ -64,6 +68,8 @@ import {
   DateFilter
 } from "@/components";
 
+import langs from "@/mixins/langs";
+
 import moment from "moment";
 
 export default {
@@ -78,6 +84,8 @@ export default {
     DropdownFilter,
     TagsFilter
   },
+
+  mixins: [langs],
 
   data() {
     return {
@@ -94,33 +102,12 @@ export default {
         }
       },
       current: {},
-      columns: [
-        {
-          name: "ID",
-          sortable: true,
-          field: "id"
-        },
-        {
-          name: "QUESTION",
-          field: "question"
-        },
-        {
-          name: "DATE",
-          sortable: true,
-          field: "date"
-        },
-        {
-          name: "DIFFICULTY",
-          sortable: true,
-          field: "difficulty",
-          center: true
-        }
-      ],
+      columns: [],
       items: [
         {
           id: 2,
           question:
-            "2003 yılında Euro Vizyon Şarkı yarışmasında ülkemizi temsil eden ve yarışmada birinci gelen sanatçımız kimdir?",
+            "Who is our artist who represented our country in the Eurovision Song contest in 2003 and came first in the contest?",
           date: "25.05.2020",
           difficulty: 1,
           status: "active",
@@ -153,7 +140,7 @@ export default {
         {
           id: 11,
           question:
-            "Tsunami felaketinde en fazla zarar gören Güney Asya ülkesi aşağıdakilerden hangisidir?",
+            "Which of the following is the South Asian country that suffered the most in the tsunami disaster?",
           date: "25.05.2020",
           difficulty: 2,
           status: "active",
@@ -185,7 +172,7 @@ export default {
         },
         {
           id: 22,
-          question: "Üç büyük dince kutsal sayılan şehir hangisidir?",
+          question: "Which city is considered sacred to three great religions?",
           date: "25.05.2020",
           difficulty: 4,
           status: "active",
@@ -217,7 +204,7 @@ export default {
         },
         {
           id: 23,
-          question: "Aspirinin hammadesi nedir?",
+          question: "What is the raw material of aspirin?",
           date: "25.05.2020",
           difficulty: 4,
           status: "active",
@@ -249,7 +236,7 @@ export default {
         },
         {
           id: 34,
-          question: "Aşağıdaki ülkelerden hangisinin nüfusu daha fazladır?",
+          question: "Which of the following countries has a higher population?",
           date: "25.05.2020",
           status: "active",
           difficulty: 2,
@@ -281,7 +268,7 @@ export default {
         },
         {
           id: 37,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           difficulty: 1,
           answers: [
@@ -312,7 +299,7 @@ export default {
         },
         {
           id: 46,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           status: "inactive",
           difficulty: 2,
@@ -344,7 +331,7 @@ export default {
         },
         {
           id: 52,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           difficulty: 4,
           answers: [
@@ -375,7 +362,7 @@ export default {
         },
         {
           id: 67,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           difficulty: 1,
           answers: [
@@ -406,7 +393,7 @@ export default {
         },
         {
           id: 68,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           difficulty: 1,
           answers: [
@@ -437,7 +424,7 @@ export default {
         },
         {
           id: 69,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           difficulty: 1,
           answers: [
@@ -468,7 +455,7 @@ export default {
         },
         {
           id: 70,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           difficulty: 1,
           status: "inactive",
@@ -500,7 +487,7 @@ export default {
         },
         {
           id: 71,
-          question: "“Cevdet Bey ve Oğulları” eseri kime aittir?",
+          question: 'Who does the work "Cevdet Bey and Sons" belong to?',
           date: "25.05.2020",
           difficulty: 1,
           status: "waiting-approval",
@@ -606,6 +593,30 @@ export default {
   },
 
   methods: {
+    setColumn() {
+      this.columns = [
+        {
+          name: "ID",
+          sortable: true,
+          field: "id"
+        },
+        {
+          name: this.__("Question"),
+          field: "question"
+        },
+        {
+          name: this.__("Date"),
+          sortable: true,
+          field: "date"
+        },
+        {
+          name: this.__("Difficulty"),
+          sortable: true,
+          field: "difficulty",
+          center: true
+        }
+      ];
+    },
     onDeleteRow(item) {
       this.deleted = [...this.deleted, item];
     },
@@ -614,7 +625,10 @@ export default {
     },
     onHandleSaveWithCreateNew(question) {
       this.save(question);
-      this.newQuestion(question);
+
+      setTimeout(() => {
+        this.newQuestion(question);
+      }, 500);
     },
     save(question) {
       if (question.id) {
@@ -662,6 +676,16 @@ export default {
     onSelectQuestion(question) {
       this.current = question;
       this.setQuestionSidebar(true);
+    }
+  },
+
+  mounted() {
+    this.setColumn();
+  },
+
+  watch: {
+    lang() {
+      this.setColumn();
     }
   },
 

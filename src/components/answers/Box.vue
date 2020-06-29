@@ -23,7 +23,7 @@
     </div>
     <a href="#" class="add-btn" @click.prevent="onClickAddAnswer">
       <i class="fas fa-plus"></i>
-      Add New Answer
+      {{ __('Add New Answer') }}
     </a>
     <div class="line"></div>
   </div>
@@ -33,6 +33,7 @@
 import InputField from "../InputField";
 import Correct from "./Correct";
 import icons from "@/icons";
+import langs from "@/mixins/langs";
 
 export default {
   components: {
@@ -46,6 +47,8 @@ export default {
       default: () => []
     }
   },
+
+  mixins: [langs],
 
   data() {
     return {

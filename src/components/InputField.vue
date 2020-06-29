@@ -6,7 +6,7 @@
       class="input"
       :class="{'is-invalid': invalid, 'indented': iconPosition == 'left' && icon}"
       v-model="payload"
-      :placeholder="placeholder"
+      :placeholder="__(placeholder)"
       @input="onHandleInput"
       @focus="onHandleFocus"
       @blur="onHandleBlur"
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import langs from "@/mixins/langs";
+
 export default {
   name: "input-field",
 
@@ -43,6 +45,8 @@ export default {
       default: "left"
     }
   },
+
+  mixins: [langs],
 
   data() {
     return {

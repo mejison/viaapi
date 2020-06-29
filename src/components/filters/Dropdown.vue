@@ -20,7 +20,7 @@
         <span class="label-dropdown">{{ option.label }}</span>
       </div>
       <div class="item-dropdown" @click.stop.prevent="onClickFilter">
-        <btn>Filter</btn>
+        <btn class="small">Filter</btn>
       </div>
     </div>
   </div>

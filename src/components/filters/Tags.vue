@@ -25,7 +25,8 @@
       </div>
       <div class="item-option add-new-label" v-if="isEmtpyResult">Not found</div>
       <div class="filter-btn" v-if="checked && checked.length">
-        <btn @click="onFilter">Filter</btn>
+        <btn @click="onClear" type="outline primary small">Clear</btn>
+        <btn @click="onFilter" type="primary small">Filter</btn>
       </div>
     </div>
   </div>
@@ -78,6 +79,10 @@ export default {
   },
 
   methods: {
+    onClear() {
+      this.checked = [];
+      this.$emit("input", []);
+    },
     onFocus() {
       if (this.checked && this.checked.length) {
         // this.searchQuery = " ";
@@ -196,7 +201,6 @@ export default {
     top: 40px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     display: flex;
-    min-width: 300px;
 
     .filter-btn {
       display: none;
@@ -206,7 +210,7 @@ export default {
       display: flex !important;
       flex-wrap: wrap;
       padding: 10px;
-      min-width: 300px;
+      min-width: 350px;
 
       .filter-btn {
         border-top: 1px solid #e0e0e0;
