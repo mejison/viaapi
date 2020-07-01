@@ -223,7 +223,6 @@ a {
 
   .nav-items {
     .nav-item {
-      padding: 10px 25px;
       cursor: pointer;
       color: #444444;
       font-family: Nunito;
@@ -231,6 +230,13 @@ a {
       font-weight: bold;
       font-size: 14px;
 
+      .nav-item-row {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px 10px 20px;        
+        position: relative;
+      }
+     
       .label {
         margin-left: 15px;
       }
@@ -242,6 +248,15 @@ a {
       .toggle {
         padding: 0 5px;
         margin-left: auto;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       &.active {
@@ -263,23 +278,40 @@ a {
         }
 
         .children-item {
-          padding: 7px;
           display: flex;
           align-items: center;
+          width: 100%;
+         
+          a {                        
+            padding: 7px;
+            text-decoration: none;
+            width: 100%; 
+          }
 
           .dot {
             margin-right: 10px;
+            margin-left: 48px;
           }
         }
       }
 
       &.active {
         .children-item {
+          
           .dot {
             color: #74b1c1;
           }
+
           a {
-            color: #fff;
+            color: #444;
+
+            &.router-link-exact-active {
+              color: #fff;
+              
+              span {
+                color: #fff;
+              }
+            }
           }
         }
       }
@@ -295,4 +327,8 @@ a {
 
 .text-center {
   text-align: center;
+}
+
+.questions-table {
+  margin-bottom: 50px;
 }

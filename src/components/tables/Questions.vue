@@ -10,7 +10,9 @@
             <div>
               {{ column.name }}
               <a href="#" @click="onClickSort(column)">
-                <i v-html="icons['arrows']"></i>
+                <i v-if="column.type == ''" v-html="icons['arrows']"></i>
+                <i v-if="column.type == 'asc'" v-html="icons['arrowsUp']"></i>
+                <i v-if="column.type == 'desc'" v-html="icons['arrowsDown']"></i>
               </a>
             </div>
           </th>
@@ -26,6 +28,7 @@
           <td
             v-for="(col, indexCol) in columns"
             :class="{'center': col.center}"
+            :style="col.style"
             :key="`col-${indexCol}`"
           >{{ row[col.field] }}</td>
           <td>
@@ -92,7 +95,8 @@ export default {
         per_page: 10,
         total: this.data.length
       },
-      selected: []
+      selected: [],
+      sorted: {}
     };
   },
 
@@ -128,7 +132,19 @@ export default {
       this.$emit("select-question", question);
     },
     onClickSort(field) {
-      console.log(field);
+      if (field.type == "desc") {
+        field = {
+          ...field,
+          type: "asc"
+        };
+      } else {
+        field = {
+          ...field,
+          type: "desc"
+        };
+      }
+
+      this.$emit("sort", field);
     },
     onClickDelete(item) {
       this.$emit("delete", item);

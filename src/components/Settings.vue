@@ -2,7 +2,7 @@
   <div class="navigations">
     <div class="nav-items">
       <div class="nav-item active" v-for="(setting, index) in settings" :key="index">
-        <div class="d-flex align-items-center">
+        <div class="nav-item-row">
           <div class="image" v-if="setting.image">
             <img :src="self[setting.image]" alt="image" />
           </div>
@@ -109,5 +109,9 @@ export default {
     width: 100%;
     height: 100%;
   }
+}
+
+.children-item {
+  padding: 10px 15px;
 }
 </style>

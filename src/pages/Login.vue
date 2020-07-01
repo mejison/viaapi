@@ -71,7 +71,6 @@ export default {
     ...mapActions("auth", ["login"]),
     onSubmit() {
       this.$router.push("/app");
-      // this.login();
     }
   }
 };

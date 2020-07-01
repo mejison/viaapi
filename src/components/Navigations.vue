@@ -3,11 +3,11 @@
     <div class="nav-items">
       <div
         class="nav-item"
-        :class="{'active': $route.name == nav.name}"
+        :class="{'active': nav.names && nav.names.includes($route.name)}"
         v-for="(nav, index) in navs"
         :key="index"
       >
-        <div class="d-flex align-items-center" @click.prevent="onHandleClickNav(nav)">
+        <div class="nav-item-row" @click.prevent="onHandleClickNav(nav)">
           <i class="fas nav-icon" :class="{[nav.icon]: true}"></i>
           <span class="label">{{ nav.title }}</span>
           <a
@@ -30,8 +30,10 @@
             v-for="(navChildren, indexChildren) in nav.childrens"
             :key="indexChildren"
           >
-            <span class="dot">&bull;</span>
-            <router-link :to="navChildren.url">{{ navChildren.title }}</router-link>
+            <router-link :to="navChildren.url" :class="{'active': $route.name == nav.name}">
+              <span class="dot">&bull;</span>
+              {{ navChildren.title }}
+            </router-link>
           </div>
         </div>
       </div>
@@ -71,16 +73,18 @@ export default {
         {
           title: `Trivia ${this.__("Questions")}`,
           url: "/app",
-          name: "questions",
           icon: "fa-language",
+          names: ["questions", "questions-tk", "questions-en"],
           childrens: [
             {
               title: "Turkish",
-              url: "/app/turkish"
+              url: "/app/turkish",
+              name: "questions-tk"
             },
             {
               title: "English",
-              url: "/app"
+              url: "/app",
+              name: "questions-en"
             }
           ]
         },
@@ -88,7 +92,8 @@ export default {
           title: this.__("Tags"),
           url: "/app/tags",
           icon: "fa-tags",
-          name: "tags"
+          name: "tags",
+          names: ["tags"]
         }
       ];
     },

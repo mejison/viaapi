@@ -36,7 +36,7 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'questions',
+        name: 'questions-en',
         component: QuestionsEnglish,
         meta: {
           title: 'TRIVIA QUESTIONS - ENGLISH',
@@ -45,7 +45,7 @@ const routes = [
       },
       {
         path: 'turkish',
-        name: 'questions',
+        name: 'questions-tk',
         component: QuestionsTurkish,
         meta: {
           title: 'TRIVIA QUESTIONS - TURKISH',

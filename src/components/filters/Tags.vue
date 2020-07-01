@@ -83,11 +83,7 @@ export default {
       this.checked = [];
       this.$emit("input", []);
     },
-    onFocus() {
-      if (this.checked && this.checked.length) {
-        // this.searchQuery = " ";
-      }
-    },
+    onFocus() {},
     onFilter() {
       this.searchQuery = "";
       this.$emit("input", this.checked);

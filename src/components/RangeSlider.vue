@@ -83,27 +83,22 @@ export default {
 
   computed: {
     sliderLabel() {
-      // If using custom values, the custom label is returned, otherwise the value is also the label
       return this.sliderValues.length
         ? this.sliderValues[this.sliderValue - 1].label
         : this.sliderValue;
     },
     sliderOutputValue() {
-      // If using custom values, the custom value is returned, otherwise just the default value
       return this.sliderValues.length
         ? this.sliderValues[this.sliderValue - 1].value
         : this.sliderValue;
     },
     position() {
       const val = this.sliderValue;
-      // Measure width of slider element. Adjust by 20 to account for thumbsize
       const width = this.sliderWidth - 20;
 
-      // Calculate percentage between left and right of input
       const percent =
         (val - this.sliderMin) / (this.sliderMax - this.sliderMin);
 
-      // Janky value to get pointer to line up better
       const offset = -2;
 
       const position = width * percent + offset;
@@ -113,13 +108,11 @@ export default {
   },
 
   created() {
-    // Set local values, depending on use of custom or default
     if (this.values.length) {
       this.sliderValues = this.values;
       this.sliderMin = "1";
       this.sliderMax = this.sliderValues.length;
 
-      // Find the corresponding custom value, and set the local sliderValue
       let index = 0;
       this.values.map((item, i) => {
         if (item.value === this.value) {
@@ -129,7 +122,6 @@ export default {
       });
       this.sliderValue = index + 1;
     } else {
-      // In case of using default slider methods
       this.sliderMin = this.min;
       this.sliderMax = this.max;
       this.sliderValue = this.value;
