@@ -1,18 +1,18 @@
 <template>
   <div class="navigations">
     <div class="nav-items">
-      <div class="nav-item active" v-for="(setting, index) in settings" :key="index">
+      <div
+        class="nav-item active"
+        v-for="(setting, index) in settings"
+        :key="index"
+        @click.stop.prevent="onHandleToggle(index)"
+      >
         <div class="nav-item-row">
           <div class="image" v-if="setting.image">
             <img :src="self[setting.image]" alt="image" />
           </div>
           <span class="label">{{ self[setting.title] }}</span>
-          <a
-            href="#"
-            class="toggle"
-            v-if="setting.childrens && setting.childrens.length"
-            @click.stop.prevent="onHandleToggle(index)"
-          >
+          <a href="#" class="toggle" v-if="setting.childrens && setting.childrens.length">
             <span v-if=" ! toggles[index]" key="down">
               <i class="fas fa-angle-down"></i>
             </span>
