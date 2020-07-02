@@ -223,6 +223,7 @@ a {
 
   .nav-items {
     .nav-item {
+      user-select: none;
       cursor: pointer;
       color: #444444;
       font-family: Nunito;

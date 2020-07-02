@@ -7,15 +7,10 @@
         v-for="(nav, index) in navs"
         :key="index"
       >
-        <div class="nav-item-row" @click.prevent="onHandleClickNav(nav)">
+        <div class="nav-item-row" @click.stop.prevent="onHandleClickNav(nav, index)">
           <i class="fas nav-icon" :class="{[nav.icon]: true}"></i>
           <span class="label">{{ nav.title }}</span>
-          <a
-            href="#"
-            class="toggle"
-            v-if="nav.childrens && nav.childrens.length"
-            @click.stop.prevent="onHandleToggle(index)"
-          >
+          <a href="#" class="toggle" v-if="nav.childrens && nav.childrens.length">
             <span v-if=" ! toggles[index]" key="down">
               <i class="fas fa-angle-down"></i>
             </span>
@@ -102,9 +97,15 @@ export default {
         indexRow == index ? !item : item
       );
     },
-    onHandleClickNav(nav) {
-      if (this.$route.name != nav.name) {
+    onHandleClickNav(nav, index) {
+      if (!nav.names.includes(this.$route.name)) {
         this.$router.push(nav.url);
+      }
+
+      if (nav.childrens && nav.childrens.length) {
+        this.toggles = this.toggles.map((item, indexRow) =>
+          indexRow == index ? !item : item
+        );
       }
     },
     reset() {
